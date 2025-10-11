@@ -258,13 +258,163 @@
         #details-3 { top: 22%; right: 10%; }
         #details-4 { bottom: 15%; right: 2%; }
 
-        /* --- CTA & FOOTER --- */
-        .cta-button { background-color: var(--accent-color-vibrant); color: var(--text-dark); padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; display: inline-block; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; letter-spacing: 1px; }
-        .cta-button:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 10px 25px rgba(212, 255, 0, 0.3); }
-        footer { background-color: #0c0d10; color: var(--text-color); padding: 80px 0 30px 0; text-align: center; }
-        .social-links { display: flex; justify-content: center; gap: 15px; }
-        .social-links a { display: block; padding: 15px; color: var(--text-color); font-size: 1.8rem; transition: color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .copyright { padding-top: 30px; border-top: 1px solid #222; font-size: 0.9em; color: #777; }
+    /* --- CTA - PARTICLE COLLIDER --- */
+        #contact {
+            padding-top: 150px;
+            padding-bottom: 0; /* Remove bottom padding to connect with footer */
+        }
+        .cta-collider-container {
+            position: relative;
+            padding: 80px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 50%;
+            width: 100%;
+            max-width: 700px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+            background: radial-gradient(circle, rgba(16, 18, 24, 0.9) 50%, rgba(16, 18, 24, 0.2) 75%, transparent 100%);
+            overflow: hidden;
+        }
+        .cta-content {
+            position: relative;
+            z-index: 10;
+        }
+        .cta-content h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 15px;
+        }
+        .cta-content p {
+            max-width: 45ch;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .collider-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px dashed var(--border-color);
+            z-index: 1;
+        }
+        .ring-1 { width: 130%; height: 130%; animation: spin 60s linear infinite reverse; }
+        .ring-2 { width: 160%; height: 160%; border-style: solid; opacity: 0.5; animation: spin 90s linear infinite; }
+        .ring-3 { width: 190%; height: 190%; opacity: 0.7; animation: spin 75s linear infinite reverse; }
+
+        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .particle {
+            position: absolute; top: 50%; left: 50%;
+            width: 8px; height: 8px; border-radius: 50%; z-index: 2;
+        }
+        .p1 { background-color: var(--accent-color-vibrant); animation: orbit 8s linear infinite; }
+        .p2 { background-color: var(--accent-color-light); width: 6px; height: 6px; animation: orbit 12s linear infinite reverse; }
+        .p3 { background-color: #fff; width: 4px; height: 4px; animation: orbit 10s linear infinite; }
+        .p4 { background-color: var(--accent-color-vibrant); width: 5px; height: 5px; animation: orbit 15s linear infinite reverse; }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(300px) rotate(0deg); }
+            to   { transform: rotate(360deg) translateX(300px) rotate(-360deg); }
+        }
+        
+        .cta-collider-container:hover .collider-ring,
+        .cta-collider-container:hover .particle {
+            animation-play-state: paused;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #05060A;
+            color: var(--text-color);
+            padding: 100px 0 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color-vibrant), var(--accent-color-light), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 5s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .footer-text {
+            color: #aaa;
+            margin-bottom: 20px;
+            max-width: 40ch;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-color);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .social-icon:hover {
+            border-color: var(--accent-color-vibrant);
+            color: var(--accent-color-vibrant);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 255, 0, 0.15);
+        }
+        .footer-copyright {
+            padding-top: 30px;
+            width: 100%;
+            border-top: 1px solid #1a1a20;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* --- Adjustments for Responsive CTA & Footer --- */
+        @media (max-width: 900px) {
+            .cta-collider-container {
+                border-radius: 20px;
+                aspect-ratio: auto;
+                width: 100%;
+                padding: 60px 30px;
+                margin-bottom: 60px;
+            }
+            .collider-ring, .particle {
+                display: none;
+            }
+            footer { padding-top: 80px; }
+        }
         
         /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 900px) {
@@ -423,10 +573,55 @@
         </section>
 
         <!-- CONTACT SECTION -->
-        <section id="contact" class="container"><div data-animation="fade-in" style="text-align: center; background: var(--dark-section-bg); padding: 60px 20px; border-radius: 20px;"><h2>Ready to Make Physics Click?</h2><p style="max-width: 600px; margin: 20px auto 30px;">Let's connect and explore how we can achieve your learning goals together.</p><a href="mailto:[your-email@example.com]" class="cta-button">Get in Touch</a></div></section>
+       
     </main>
-    
-    <footer><div class="container" style="text-align: center;"><div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 50px;"><h2 data-animation="fade-in">[Your Name]</h2><div class="social-links" data-stagger-parent><a href="[your-linkedin-url]" target="_blank" title="LinkedIn" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a><a href="[your-github-url]" target="_blank" title="GitHub" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="mailto:[your-email@example.com]" title="Email" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg></a></div></div><div class="copyright"><p>&copy; 2024 [Your Name]. All Rights Reserved.</p></div></div></footer>
+
+    <!-- START: REPLACEMENT CTA & FOOTER -->
+        <section id="contact" class="container">
+            <div class="cta-collider-container" data-animation="fade-in">
+                <!-- Decorative animated rings -->
+                <div class="collider-ring ring-1"></div>
+                <div class="collider-ring ring-2"></div>
+                <div class="collider-ring ring-3"></div>
+                
+                <!-- Decorative animated particles -->
+                <span class="particle p1"></span>
+                <span class="particle p2"></span>
+                <span class="particle p3"></span>
+                <span class="particle p4"></span>
+
+                <!-- Main content -->
+                <div class="cta-content">
+                    <h2>Ready to Make Physics Click?</h2>
+                    <p>My mission is to illuminate the path to understanding. Let's connect and chart a course for your success.</p>
+                    <a href="mailto:[your-email@example.com]" class="cta-button">Initiate Contact</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-container container">
+                <div class="footer-content" data-stagger-parent>
+                    <a href="#" class="footer-logo" data-animation="fade-in" data-stagger-child>[Your Name]</a>
+                    <p class="footer-text" data-animation="fade-in" data-stagger-child>Exploring the cosmos, one concept at a time.</p>
+                    <div class="footer-socials" data-animation="fade-in" data-stagger-child>
+                        <a href="[your-linkedin-url]" target="_blank" title="LinkedIn" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="[your-github-url]" target="_blank" title="GitHub" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                        <a href="mailto:[your-email@example.com]" title="Email" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-copyright" data-animation="fade-in">
+                    <p>&copy; 2024 [Your Name]. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <!-- END: REPLACEMENT CTA & FOOTER -->
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
