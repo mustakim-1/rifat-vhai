@@ -48,8 +48,6 @@
         /* --- ANIMATION SYSTEM --- */
         [data-animation] { opacity: 0; transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
         [data-animation="fade-in"] { transform: translateY(40px); }
-        [data-animation="slide-in-up"] { transform: translateY(80px); }
-        [data-animation="zoom-in"] { transform: scale(0.95); }
         [data-animation].is-visible { opacity: 1; transform: none; }
         [data-stagger-child] { transition-delay: calc(var(--stagger-index) * 100ms); }
         
@@ -69,6 +67,7 @@
         .nav-logo { font-family: var(--font-heading); font-size: 1.5rem; color: #fff; }
         .nav-links { display: flex; list-style: none; gap: 10px; }
         .nav-links a { font-weight: 500; padding: 10px 15px; position: relative; color: var(--text-color); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .menu-toggle { display: none; }
 
         /* --- HERO --- */
         .hero { display: flex; align-items: center; justify-content: space-between; min-height: 100vh; }
@@ -76,14 +75,32 @@
         .hero-text .profession { font-family: var(--font-body); font-size: 1.8rem; font-weight: 500; text-transform: none; letter-spacing: 0; margin-top: -5px; margin-bottom: 20px; color: var(--accent-color-light); }
         .hero-image { position: relative; text-align: center; }
         .hero-image img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; position: relative; z-index: 2; border: 10px solid var(--bg-color); box-shadow: 0 0 50px rgba(168, 145, 226, 0.4); }
-        .hero-image::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: linear-gradient(45deg, var(--accent-color-light), #523194); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; z-index: 1; animation: morph 10s ease-in-out infinite, spin 20s linear infinite alternate; }
+        .hero-image::before { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; background: linear-gradient(45deg, var(--accent-color-light), #523194); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; z-index: 1; animation: morph 10s ease-in-out infinite, spin 20s linear infinite alternate; }
         @keyframes morph { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: translate(-50%, -50%) rotate(0deg); } 50% { border-radius: 60% 40% 30% 70% / 70% 60% 40% 30%; transform: translate(-50%, -50%) rotate(180deg); } 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: translate(-50%, -50%) rotate(360deg); } }
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* --- ABOUT --- */
-        .about-section { background: linear-gradient(145deg, #22252a, #1a1c1e); border-radius: 30px; padding: 60px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 1px solid var(--border-color); display: flex; align-items: center; gap: 50px; }
-        .about-image img { width: 220px; height: 220px; border-radius: 15px; object-fit: cover; border: 4px solid var(--accent-color-vibrant); }
-        .about-content h2 { text-align: left; margin-bottom: 20px; color: #fff; }
+        /* --- ABOUT (REFINED MIND MAP STYLE) --- */
+        .about-header { text-align: center; margin-bottom: 60px; }
+        .about-header p { max-width: 60ch; margin-left: auto; margin-right: auto; }
+        .mind-map-container { position: relative; width: 100%; max-width: 900px; height: 600px; margin: 0 auto; }
+        .mind-map-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+        .mind-map-svg path { stroke: var(--border-color); stroke-width: 2; fill: none; transition: stroke 0.4s ease; }
+        .mind-map-container.is-visible .mind-map-svg path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw-line 2s ease-out forwards; }
+        #path-1 { animation-delay: 0.2s; } #path-2 { animation-delay: 0.4s; } #path-3 { animation-delay: 0.6s; } #path-4 { animation-delay: 0.8s; }
+        .mind-map-svg path.active { stroke: var(--accent-color-vibrant); }
+        @keyframes draw-line { to { stroke-dashoffset: 0; } }
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 25px rgba(168, 145, 226, 0.4), inset 0 0 15px rgba(10,10,15,0.8); } 50% { transform: translate(-50%, -50%) scale(1.03); box-shadow: 0 0 35px rgba(168, 145, 226, 0.6), inset 0 0 20px rgba(10,10,15,0.8); } 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 25px rgba(168, 145, 226, 0.4), inset 0 0 15px rgba(10,10,15,0.8); } }
+        .mind-map-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; background: var(--dark-section-bg); border-radius: 50%; border: 3px solid var(--accent-color-light); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; z-index: 10; animation: pulse 5s ease-in-out infinite; }
+        .mind-map-core h3 { color: var(--text-color); font-size: 1.8rem; margin-bottom: 5px; }
+        .mind-map-core span { color: var(--accent-color-light); font-weight: 500; }
+        .mind-map-branch { position: absolute; width: 320px; z-index: 5; transition: opacity 0.4s ease, transform 0.4s ease; display: flex; align-items: center; gap: 15px; }
+        .mind-map-container:has(.mind-map-branch:hover) .mind-map-branch:not(:hover) { opacity: 0.4; transform: scale(0.98); }
+        .mind-map-node { width: 25px; height: 25px; background: var(--dark-section-bg); border: 3px solid var(--accent-color-vibrant); border-radius: 50%; transition: transform 0.3s ease, box-shadow 0.3s ease; flex-shrink: 0; }
+        .mind-map-content { flex-grow: 1; }
+        .mind-map-content h4 { font-family: var(--font-body); font-weight: 700; font-size: 1.15rem; color: var(--accent-color-light); text-transform: none; letter-spacing: 0; margin-bottom: 5px; }
+        .mind-map-content p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0; opacity: 0.8; }
+        .mind-map-branch:hover .mind-map-node { transform: scale(1.2); box-shadow: 0 0 20px var(--accent-color-vibrant); }
+        #branch-1 { top: 10%; left: 0; } #branch-2 { bottom: 10%; left: 0; flex-direction: row-reverse; } #branch-2 .mind-map-content { text-align: right; } #branch-3 { top: 15%; right: 0; flex-direction: row-reverse; } #branch-3 .mind-map-content { text-align: right; } #branch-4 { bottom: 15%; right: 0; }
 
         /* --- SKILLS MARQUEE --- */
         #skills { padding: 120px 0; }
@@ -99,77 +116,21 @@
         .skill-card svg { width: 48px; height: 48px; margin-bottom: 15px; color: var(--accent-color-vibrant); }
         .skill-card h3 { margin-bottom: 5px; color: #fff; }
 
-        /* --- NEW: VERTICAL ACCORDION JOURNEY SECTION --- */
+        /* --- VERTICAL ACCORDION JOURNEY SECTION --- */
         #experience { padding: 0; }
-        .journey-sticky-container {
-            height: 300vh; /* Determines how long you scroll through the experience */
-            position: relative;
-        }
-        .journey-accordion {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .journey-panel {
-            flex: 1; /* Start with equal size */
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            transition: flex 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .journey-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: rgba(0,0,0, 0.6);
-            transition: background-color 0.8s ease;
-        }
-        .journey-panel.active {
-            flex: 5; /* Expand the active panel */
-        }
-        .journey-panel.active::before {
-            background-color: rgba(0,0,0, 0.4);
-        }
-        .journey-panel-title {
-            position: relative;
-            z-index: 2;
-            color: #fff;
-            font-family: var(--font-heading);
-            font-size: clamp(2rem, 5vw, 3rem);
-            text-align: center;
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .journey-panel-content {
-            position: absolute;
-            z-index: 2;
-            color: var(--text-color);
-            padding: 40px;
-            max-width: 600px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
-        }
-        .journey-panel.active .journey-panel-title {
-            opacity: 0;
-            transform: translateY(-100%);
-            pointer-events: none;
-        }
-        .journey-panel.active .journey-panel-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .journey-sticky-container { height: 300vh; position: relative; }
+        .journey-accordion { position: sticky; top: 0; height: 100vh; width: 100%; display: flex; flex-direction: column; overflow: hidden; }
+        .journey-panel { flex: 1; position: relative; background-size: cover; background-position: center; transition: flex 0.8s cubic-bezier(0.65, 0, 0.35, 1); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .journey-panel::before { content: ''; position: absolute; inset: 0; background-color: rgba(0,0,0, 0.6); transition: background-color 0.8s ease; }
+        .journey-panel.active { flex: 5; }
+        .journey-panel.active::before { background-color: rgba(0,0,0, 0.4); }
+        .journey-panel-title { position: relative; z-index: 2; color: #fff; font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3rem); text-align: center; transition: opacity 0.6s ease, transform 0.6s ease; }
+        .journey-panel-content { position: absolute; z-index: 2; color: var(--text-color); padding: 40px; max-width: 600px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s; }
+        .journey-panel.active .journey-panel-title { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+        .journey-panel.active .journey-panel-content { opacity: 1; transform: translateY(0); }
         .journey-panel-content .institution { font-weight: bold; color: #ccc; }
         .journey-panel-content .date { color: #888; font-size: 0.9em; margin-bottom: 10px; }
         .journey-panel-content p { color: #bbb; }
-
 
         /* --- PROJECTS & ACHIEVEMENTS --- */
         .project-showcase-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; align-items: center; }
@@ -183,12 +144,119 @@
         .project-preview-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity 0.5s ease, transform 0.5s ease; }
         .project-preview-img.active { opacity: 1; transform: scale(1); }
         
-        .achievements-list { list-style: none; margin-bottom: 40px; }
-        .achievements-list li { padding: 20px; border-bottom: 1px solid var(--border-color); font-size: 1.1rem; transition: background-color 0.3s ease, transform 0.3s ease; position: relative; padding-left: 40px; }
-        .achievements-list li::before { content: '🏆'; position: absolute; left: 10px; top: 18px; opacity: 0.5; transition: opacity 0.3s, transform 0.3s; }
-        .achievements-list li:hover { background-color: rgba(212, 255, 0, 0.05); transform: translateX(10px); }
-        .achievements-list li:hover::before { opacity: 1; transform: scale(1.2); }
-        .achievements-list li:first-child { border-top: 1px solid var(--border-color); }
+        /* --- COSMIC TRAJECTORY ACHIEVEMENTS --- */
+        #achievements {
+            position: relative;
+            overflow: hidden;
+            padding: 150px 0;
+            background-color: #05060A;
+        }
+        .stars { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; display: block; background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="%23fff" cx="100" cy="100" r="1.5"/></svg>') repeat; background-size: 200px 200px; opacity: 0.4; animation: zoom-stars 60s linear infinite; }
+        @keyframes zoom-stars { from { transform: scale(1); } to { transform: scale(1.3); } }
+        .twinkling { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; display: block; background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle fill="%23fff" cx="10" cy="20" r="1"/><circle fill="%23fff" cx="100" cy="10" r="1"/><circle fill="%23fff" cx="200" cy="80" r="0.5"/><circle fill="%23fff" cx="350" cy="150" r="1.2"/><circle fill="%23fff" cx="450" cy="30" r="0.8"/></svg>') repeat; background-size: 500px 500px; animation: move-twink-back 200s linear infinite; opacity: 0.8; }
+        @keyframes move-twink-back { from { background-position: 0 0; } to { background-position: -10000px 5000px; } }
+
+        .trajectory-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        .trajectory-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: visible;
+        }
+        .trajectory-svg path {
+            fill: none;
+            stroke-width: 3px;
+        }
+        #trajectory-path-bg {
+            stroke: var(--border-color);
+            opacity: 0.5;
+        }
+        #trajectory-path-progress {
+            stroke: url(#path-gradient);
+            stroke-dasharray: 1500; /* Approximate path length */
+            stroke-dashoffset: 1500;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #achievements.is-visible #trajectory-path-progress {
+            stroke-dashoffset: 0;
+        }
+
+        .achievement-node {
+            position: absolute;
+            width: 25px; height: 25px;
+            border-radius: 50%;
+            background: var(--dark-section-bg);
+            border: 3px solid var(--accent-color-light);
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .achievement-node:hover, .achievement-node.active {
+            transform: scale(1.3);
+            border-color: var(--accent-color-vibrant);
+            box-shadow: 0 0 15px var(--accent-color-vibrant), 0 0 30px var(--accent-color-vibrant);
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px var(--accent-color-light); }
+            50% { box-shadow: 0 0 25px var(--accent-color-light); }
+            100% { box-shadow: 0 0 10px var(--accent-color-light); }
+        }
+        .achievement-node.initial-focus {
+             animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        /* --- Node Positioning --- */
+        #node-1 { top: 8%; left: 10%; }
+        #node-2 { top: 40%; left: 35%; }
+        #node-3 { top: 15%; left: 65%; }
+        #node-4 { top: 55%; left: 85%; }
+
+        .achievement-details-panel {
+            position: absolute;
+            width: 280px;
+            padding: 25px;
+            background: rgba(16, 18, 24, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+        }
+        .achievement-details-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        .achievement-details-panel h4 {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--accent-color-vibrant);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .achievement-details-panel p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+            opacity: 0.8;
+        }
+
+        /* --- Panel Positioning --- */
+        #details-1 { top: 15%; left: 3%; }
+        #details-2 { bottom: 35%; left: 38%; }
+        #details-3 { top: 22%; right: 10%; }
+        #details-4 { bottom: 15%; right: 2%; }
 
         /* --- CTA & FOOTER --- */
         .cta-button { background-color: var(--accent-color-vibrant); color: var(--text-dark); padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; display: inline-block; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; letter-spacing: 1px; }
@@ -201,21 +269,41 @@
         /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 900px) {
             body { cursor: auto; } .cursor { display: none; }
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 80px; } .hero-text { max-width: 100%; margin-top: 60px; }
-            .about-section { flex-direction: column; text-align: center; } .about-content h2 { text-align: center; }
-            /* Mobile fallback for Journey section */
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; min-height: auto; } .hero-text { max-width: 100%; margin-top: 60px; }
+            .hero-image img { width: 250px; height: 250px; }
+            .mind-map-container { position: static; height: auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+            .mind-map-svg { display: none; }
+            .mind-map-core { position: static; transform: none; width: 180px; height: 180px; margin-bottom: 20px; animation: none; }
+            .mind-map-branch { position: static; width: 100%; max-width: 400px; background: var(--dark-section-bg); border: 1px solid var(--border-color); padding: 25px; border-radius: 10px; text-align: center !important; opacity: 1 !important; transform: none !important; flex-direction: column !important; }
+            .mind-map-node { display: block; margin-bottom: 15px; }
+            .mind-map-content { margin: 0 !important; text-align: center !important; }
             .journey-sticky-container { height: auto; }
             .journey-accordion { position: static; height: auto; display: block; }
             .journey-panel { flex: 1; height: auto; min-height: 300px; padding: 20px; margin-bottom: 20px; border-radius: 15px; }
             .journey-panel::before { background-color: rgba(0,0,0,0.5); }
-            .journey-panel-title { display: none; } /* Hide the title that would be covered */
-            .journey-panel-content { position: static; opacity: 1; transform: none; text-align: center; }
-            
+            .journey-panel-title { display: none; }
+            .journey-panel-content { position: static; opacity: 1; transform: none; text-align: center; padding: 20px; }
             .project-showcase-container { grid-template-columns: 1fr; }
             .project-image-previews { height: 300px; order: -1; margin-bottom: 30px; }
+            
+            /* Responsive Trajectory */
+            .trajectory-container { height: auto; display: flex; flex-direction: column; gap: 30px; padding: 20px 0; }
+            .trajectory-svg { display: none; }
+            .achievement-node { display: none; /* Hide nodes on mobile, info is always visible */ }
+            .achievement-details-panel { position: static; width: 100%; max-width: 400px; margin: 0 auto; opacity: 1; visibility: visible; transform: none; text-align: left; }
+            .achievement-node, .achievement-details-panel.active { animation: none; transform: none; box-shadow: none; }
         }
         @media (max-width: 768px) {
-            section { padding: 80px 0; } .nav-links { display: none; }
+            section { padding: 80px 0; }
+            #achievements { padding: 80px 0; }
+            .nav-links { position: fixed; top: 70px; left: 0; width: 100%; height: calc(100vh - 70px); background-color: rgba(10, 10, 15, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a { font-size: 1.5rem; }
+            .menu-toggle { display: flex; flex-direction: column; justify-content: space-around; width: 30px; height: 25px; background: transparent; border: none; cursor: pointer; z-index: 1100; }
+            .menu-toggle .bar { width: 100%; height: 3px; background-color: var(--text-color); border-radius: 5px; transition: all 0.3s ease-in-out; }
+            .menu-toggle.active .bar:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+            .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.active .bar:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
             .skills-marquee { mask-image: none; } .skills-track { animation: none; flex-wrap: wrap; justify-content: center; }
             .skill-card { width: 100%; max-width: 300px; }
         }
@@ -229,7 +317,7 @@
     <nav>
         <div class="nav-container container">
             <a href="#" class="nav-logo">[Your Name]</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-menu">
                 <li><a href="#about" class="magnetic-link">About</a></li>
                 <li><a href="#skills" class="magnetic-link">Skills</a></li>
                 <li><a href="#experience" class="magnetic-link">Experience</a></li>
@@ -237,65 +325,105 @@
                 <li><a href="#achievements" class="magnetic-link">Achievements</a></li>
                 <li><a href="#contact" class="magnetic-link">Contact</a></li>
             </ul>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </nav>
 
-    <header class="hero container"><div class="hero-text"><h1 id="hero-name" data-animation="fade-in">[Your Name]</h1><h3 class="profession" data-animation="fade-in" style="transition-delay: 100ms;">Physics Educator & Science Communicator</h3><p class="tagline" data-animation="fade-in" style="transition-delay: 200ms;">"Passionate about demystifying the universe, one equation at a time. I create engaging learning experiences that make complex physics accessible and exciting."</p></div><div class="hero-image" data-animation="zoom-in" style="transition-delay: 300ms;"><img src="/images/1878312872148782_3242345_45243.jpg" alt="A professional headshot of [Your Name]"></div></header>
+    <header class="hero container"><div class="hero-text" data-stagger-parent><h1 id="hero-name" data-animation="fade-in" data-stagger-child>[Your Name]</h1><h3 class="profession" data-animation="fade-in" data-stagger-child>Physics Educator & Science Communicator</h3><p class="tagline" data-animation="fade-in" data-stagger-child>"Passionate about demystifying the universe, one equation at a time. I create engaging learning experiences that make complex physics accessible and exciting."</p></div><div class="hero-image" data-animation="fade-in"><img src="images/image-removebg-preview.png" alt="A professional headshot of [Your Name]"></div></header>
 
     <main>
-        <section id="about" class="container"><div class="about-section" data-animation="slide-in-up"><div class="about-image"><img src="/images/1878312872148782_3242345_45243.jpg" alt="A photo in a classroom setting"></div><div class="about-content"><h2>About Me</h2><p>As a physics enthusiast currently pursuing my Bachelor's degree, my mission is to ignite curiosity and foster a deep understanding of the physical world. I specialize in breaking down complex topics into digestible, intuitive concepts. Whether through tutoring, curriculum design, or creating interactive content, my goal is to build confidence and a genuine love for science.</p></div></div></section>
+        <!-- ABOUT SECTION -->
+        <section id="about" class="container">
+            <div class="about-header" data-animation="fade-in">
+                <h2>My Approach to Physics</h2>
+                <p>I believe teaching is more than just transferring information. It's about building a web of understanding, connecting core principles to practical methods and an inspiring mission.</p>
+            </div>
+            <div class="mind-map-container" data-animation="fade-in" data-stagger-parent>
+                <svg class="mind-map-svg" viewBox="0 0 900 600">
+                    <path id="path-1" d="M 450 300 Q 250 200 160 85"></path><path id="path-2" d="M 450 300 Q 250 450 160 500"></path><path id="path-3" d="M 450 300 Q 650 150 740 115"></path><path id="path-4" d="M 450 300 Q 700 450 740 480"></path>
+                </svg>
+                <div class="mind-map-core" data-stagger-child><h3>[Your Name]</h3><span>Physics Educator</span></div>
+                <div class="mind-map-branch" id="branch-1" data-stagger-child data-path="path-1"><div class="mind-map-node"></div><div class="mind-map-content"><h4>My Philosophy</h4><p>Ignite curiosity first. Understanding follows naturally when a student is genuinely engaged and asking "why."</p></div></div>
+                <div class="mind-map-branch" id="branch-2" data-stagger-child data-path="path-2"><div class="mind-map-node"></div><div class="mind-map-content"><h4>My Methodology</h4><p>From interactive simulations to real-world analogies, I use tangible tools to demystify abstract concepts.</p></div></div>
+                <div class="mind-map-branch" id="branch-3" data-stagger-child data-path="path-3"><div class="mind-map-node"></div><div class="mind-map-content"><h4>My Mission</h4><p>To build confidence and empower students with the critical thinking skills to see the physics in everything.</p></div></div>
+                <div class="mind-map-branch" id="branch-4" data-stagger-child data-path="path-4"><div class="mind-map-node"></div><div class="mind-map-content"><h4>Core Skill</h4><p>Simplifying complexity. I excel at breaking down daunting equations into simple, logical steps.</p></div></div>
+            </div>
+        </section>
         
+        <!-- SKILLS SECTION -->
         <section id="skills"><div class="container"><h2 data-animation="fade-in">Core Competencies</h2></div><div class="skills-marquee" data-animation="fade-in"><div class="skills-track"><div class="skill-card"><div class="skill-content"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg><h3>Physics Tutoring</h3></div></div><div class="skill-card"><div class="skill-content"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg><h3>Curriculum Design</h3></div></div><div class="skill-card"><div class="skill-content"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg><h3>Public Speaking</h3></div></div><div class="skill-card"><div class="skill-content"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg><h3>Lesson Planning</h3></div></div><div class="skill-card"><div class="skill-content"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.567L16.5 21.75l-.398-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.398a2.25 2.25 0 001.423-1.423L16.5 15.75l.398 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.398a2.25 2.25 0 00-1.423 1.423z" /></svg><h3>Problem Solving</h3></div></div></div></div></section>
         
-        <!-- NEW AND IMPROVED JOURNEY SECTION -->
+        <!-- EXPERIENCE SECTION -->
         <section id="experience">
             <div class="container" style="text-align: center; margin-bottom: 50px;">
                  <h2 data-animation="fade-in">My Journey</h2>
             </div>
             <div class="journey-sticky-container">
                 <div class="journey-accordion">
-                    <!-- Panel 1 -->
-                    <!-- TODO: Replace background-image URL with a relevant photo -->
-                    <div class="journey-panel active" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=University+Campus');">
-                        <h3 class="journey-panel-title">B.Sc. in Physics</h3>
-                        <div class="journey-panel-content">
-                            <h3>B.Sc. in Physics (Honours)</h3>
-                            <p class="institution">National University</p>
-                            <p class="date">Ongoing</p>
-                            <p>Focusing on classical mechanics, quantum physics, and thermodynamics while developing a strong foundation in experimental and theoretical principles.</p>
-                        </div>
+                    <div class="journey-panel active" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=University+Campus');"><h3 class="journey-panel-title">B.Sc. in Physics</h3><div class="journey-panel-content"><h3>B.Sc. in Physics (Honours)</h3><p class="institution">National University</p><p class="date">Ongoing</p><p>Focusing on classical mechanics, quantum physics, and thermodynamics while developing a strong foundation in experimental and theoretical principles.</p></div></div>
+                    <div class="journey-panel" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=Tutoring+Session');"><h3 class="journey-panel-title">Private Tutor</h3><div class="journey-panel-content"><h3>Private Physics Tutor</h3><p class="institution">Freelance</p><p class="date">[Start Year] - Present</p><p>Provided one-on-one and group tutoring for high school students, resulting in a 25% average grade improvement. Developed custom study materials.</p></div></div>
+                    <div class="journey-panel" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=College+Building');"><h3 class="journey-panel-title">Higher Secondary</h3><div class="journey-panel-content"><h3>Higher Secondary Certificate</h3><p class="institution">[Your College Name]</p><p class="date">[Year of Completion]</p><p>Graduated with a concentration in science, achieving top marks in Physics and Mathematics, sparking my passion for the subject.</p></div></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PROJECTS SECTION -->
+        <section id="projects" class="container"><h2 data-animation="fade-in">Projects & Initiatives</h2><div class="project-showcase-container" data-animation="fade-in"><div class="project-list"><div class="project-item active" data-image="sim"><h3>Interactive Physics Simulation</h3><p>A web-based simulation to explain projectile motion. Allows students to visually grasp concepts by manipulating variables.</p><div class="project-tools"><span>JavaScript</span><span>HTML5 Canvas</span><span>p5.js</span></div></div><div class="project-item" data-image="lesson"><h3>Lesson Plan Series</h3><p>A 5-day lesson plan on Electromagnetism for 12th-grade students, integrating hands-on activities and PhET simulations.</p><div class="project-tools"><span>Google Docs</span><span>Canva</span><span>PhET</span></div></div></div><div class="project-image-previews"><img src="https://via.placeholder.com/800x600.png?text=Interactive+Simulation" alt="Projectile Motion Simulation" class="project-preview-img active" data-image="sim"><img src="https://via.placeholder.com/800x600.png?text=Lesson+Plan+Series" alt="Electromagnetism lesson plan" class="project-preview-img" data-image="lesson"></div></div></section>
+        
+        <!-- COSMIC TRAJECTORY ACHIEVEMENTS SECTION -->
+        <section id="achievements">
+            <div class="stars"></div>
+            <div class="twinkling"></div>
+            <div class="container">
+                <h2 data-animation="fade-in">My Trajectory</h2>
+                
+                <div class="trajectory-container" data-animation="fade-in">
+                    <!-- SVG Path for the Trajectory -->
+                    <svg class="trajectory-svg" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="path-gradient" gradientTransform="rotate(90)">
+                                <stop offset="0%" stop-color="var(--accent-color-light)" />
+                                <stop offset="100%" stop-color="var(--accent-color-vibrant)" />
+                            </linearGradient>
+                        </defs>
+                        <path id="trajectory-path-bg" d="M100,50 C 250,250 300,50 450,250 C 600,450 600,50 750,100 C 900,150 900,450 950,350"></path>
+                        <path id="trajectory-path-progress" d="M100,50 C 250,250 300,50 450,250 C 600,450 600,50 750,100 C 900,150 900,450 950,350"></path>
+                    </svg>
+
+                    <!-- Achievement Nodes -->
+                    <div id="node-1" class="achievement-node initial-focus" data-target="details-1"></div>
+                    <div id="node-2" class="achievement-node" data-target="details-2"></div>
+                    <div id="node-3" class="achievement-node" data-target="details-3"></div>
+                    <div id="node-4" class="achievement-node" data-target="details-4"></div>
+                    
+                    <!-- Achievement Details Panels -->
+                    <div id="details-1" class="achievement-details-panel active">
+                        <h4>Science Fair Winner (2023)</h4>
+                        <p>Awarded 1st place for designing a functional, low-cost spectrometer from basic materials.</p>
                     </div>
-                    <!-- Panel 2 -->
-                    <!-- TODO: Replace background-image URL with a relevant photo -->
-                    <div class="journey-panel" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=Tutoring+Session');">
-                        <h3 class="journey-panel-title">Private Tutor</h3>
-                        <div class="journey-panel-content">
-                             <h3>Private Physics Tutor</h3>
-                            <p class="institution">Freelance</p>
-                            <p class="date">[Start Year] - Present</p>
-                            <p>Provided one-on-one and group tutoring for high school students, resulting in a 25% average grade improvement. Developed custom study materials.</p>
-                        </div>
+                    <div id="details-2" class="achievement-details-panel">
+                        <h4>Instructional Design Certified (2022)</h4>
+                        <p>Completed an intensive workshop on modern pedagogical techniques and curriculum development.</p>
                     </div>
-                    <!-- Panel 3 -->
-                    <!-- TODO: Replace background-image URL with a relevant photo -->
-                    <div class="journey-panel" style="background-image: url('https://via.placeholder.com/1920x1080.png?text=College+Building');">
-                        <h3 class="journey-panel-title">Higher Secondary</h3>
-                        <div class="journey-panel-content">
-                            <h3>Higher Secondary Certificate</h3>
-                            <p class="institution">[Your College Name]</p>
-                            <p class="date">[Year of Completion]</p>
-                            <p>Graduated with a concentration in science, achieving top marks in Physics and Mathematics, sparking my passion for the subject.</p>
-                        </div>
+                    <div id="details-3" class="achievement-details-panel">
+                        <h4>Academic Excellence Scholarship (2021)</h4>
+                        <p>Recipient of the [Scholarship Name], a merit-based award for outstanding performance in the sciences.</p>
+                    </div>
+                    <div id="details-4" class="achievement-details-panel">
+                        <h4>Excellence in <br>
+                             Tutoring Award (2020)</h4>
+                        <p>Received a formal commendation from [Institution] for exceptional dedication and effectiveness in tutoring.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="container"><h2 data-animation="fade-in">Projects & Initiatives</h2><div class="project-showcase-container" data-animation="fade-in"><div class="project-list"><div class="project-item active" data-image="sim"><h3>Interactive Physics Simulation</h3><p>A web-based simulation to explain projectile motion. Allows students to visually grasp concepts by manipulating variables.</p><div class="project-tools"><span>JavaScript</span><span>HTML5 Canvas</span><span>p5.js</span></div></div><div class="project-item" data-image="lesson"><h3>Lesson Plan Series</h3><p>A 5-day lesson plan on Electromagnetism for 12th-grade students, integrating hands-on activities and PhET simulations.</p><div class="project-tools"><span>Google Docs</span><span>Canva</span><span>PhET</span></div></div></div><div class="project-image-previews"><img src="https://via.placeholder.com/800x600.png?text=Interactive+Simulation" alt="Projectile Motion Simulation" class="project-preview-img active" data-image="sim"><img src="https://via.placeholder.com/800x600.png?text=Lesson+Plan+Series" alt="Electromagnetism lesson plan" class="project-preview-img" data-image="lesson"></div></div></section>
-        
-        <section id="achievements" class="container"><h2 data-animation="fade-in">Achievements</h2><ul class="achievements-list" data-stagger-parent><li data-animation="slide-in-up" data-stagger-child>1st Place - Inter-College Science Fair for 'Low-Cost Spectrometer' Project</li><li data-animation="slide-in-up" data-stagger-child>Certified in "Instructional Design for Educators" Workshop</li><li data-animation="slide-in-up" data-stagger-child>Recipient of the [Scholarship Name] for Academic Excellence</li><li data-animation="slide-in-up" data-stagger-child>Commendation for "Excellence in Tutoring" from [Institution]</li></ul></section>
-
-        <section id="contact" class="container"><div data-animation="zoom-in" style="text-align: center; background: var(--dark-section-bg); padding: 60px; border-radius: 20px;"><h2>Ready to Make Physics Click?</h2><p style="max-width: 600px; margin: 20px auto 30px;">Let's connect and explore how we can achieve your learning goals together.</p><a href="mailto:[your-email@example.com]" class="cta-button">Get in Touch</a></div></section>
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="container"><div data-animation="fade-in" style="text-align: center; background: var(--dark-section-bg); padding: 60px 20px; border-radius: 20px;"><h2>Ready to Make Physics Click?</h2><p style="max-width: 600px; margin: 20px auto 30px;">Let's connect and explore how we can achieve your learning goals together.</p><a href="mailto:[your-email@example.com]" class="cta-button">Get in Touch</a></div></section>
     </main>
     
     <footer><div class="container" style="text-align: center;"><div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 50px;"><h2 data-animation="fade-in">[Your Name]</h2><div class="social-links" data-stagger-parent><a href="[your-linkedin-url]" target="_blank" title="LinkedIn" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a><a href="[your-github-url]" target="_blank" title="GitHub" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a><a href="mailto:[your-email@example.com]" title="Email" class="magnetic-link" data-animation="fade-in" data-stagger-child><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg></a></div></div><div class="copyright"><p>&copy; 2024 [Your Name]. All Rights Reserved.</p></div></div></footer>
@@ -306,13 +434,18 @@
         // --- ANIMATION OBSERVER ---
         const animatedElements = document.querySelectorAll('[data-animation]');
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-        }, { threshold: 0.1 });
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
         animatedElements.forEach(el => observer.observe(el));
 
         // --- CUSTOM CURSOR ---
         const cursor = document.querySelector('.cursor');
-        const interactiveElements = document.querySelectorAll('a, button, .skill-card, .project-item, .cta-button');
+        const interactiveElements = document.querySelectorAll('a, button, .skill-card, .project-item, .cta-button, .mind-map-branch, .achievement-node');
         document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
         document.addEventListener('mouseleave', () => cursor.classList.add('hidden'));
         document.addEventListener('mouseenter', () => cursor.classList.remove('hidden'));
@@ -334,17 +467,43 @@
             link.addEventListener('mouseleave', function() { this.style.transform = 'translate(0,0)'; });
         });
 
-        // --- NEW: VERTICAL ACCORDION JOURNEY SCRIPT ---
+        // --- HAMBURGER MENU SCRIPT ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = navMenu.querySelectorAll('a');
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+        }
+
+        // --- MIND MAP INTERACTIVITY SCRIPT ---
+        const mindMapBranches = document.querySelectorAll('.mind-map-branch');
+        mindMapBranches.forEach(branch => {
+            const pathId = branch.dataset.path;
+            const path = document.getElementById(pathId);
+            if(path) {
+                branch.addEventListener('mouseenter', () => { path.classList.add('active'); });
+                branch.addEventListener('mouseleave', () => { path.classList.remove('active'); });
+            }
+        });
+
+        // --- VERTICAL ACCORDION JOURNEY SCRIPT ---
         const journeyContainer = document.querySelector('.journey-sticky-container');
         const journeyPanels = document.querySelectorAll('.journey-panel');
         if (journeyContainer && journeyPanels.length > 0 && window.matchMedia("(min-width: 901px)").matches) {
             window.addEventListener('scroll', () => {
                 const containerRect = journeyContainer.getBoundingClientRect();
-                // Check if we are scrolling within the sticky container
                 if (containerRect.top <= 0 && containerRect.bottom >= window.innerHeight) {
                     const scrollProgress = -containerRect.top / (journeyContainer.scrollHeight - window.innerHeight);
                     const activeIndex = Math.min(journeyPanels.length - 1, Math.floor(scrollProgress * journeyPanels.length));
-                    
                     journeyPanels.forEach((panel, index) => {
                         panel.classList.toggle('active', index === activeIndex);
                     });
@@ -352,11 +511,11 @@
             });
         }
 
-
         // --- INFINITE SKILLS MARQUEE ---
         const skillsTrack = document.querySelector('.skills-track');
         if(skillsTrack){
-            Array.from(skillsTrack.children).forEach(skill => {
+            const children = Array.from(skillsTrack.children);
+            children.forEach(skill => {
                 const clone = skill.cloneNode(true);
                 clone.setAttribute('aria-hidden', true); 
                 skillsTrack.appendChild(clone);
@@ -386,6 +545,57 @@
                     firstItem.classList.add('active');
                     firstImage.classList.add('active');
                  }
+            });
+        }
+        
+        // --- COSMIC TRAJECTORY INTERACTIVITY ---
+        const trajectorySection = document.getElementById('achievements');
+        const nodes = document.querySelectorAll('.achievement-node');
+        const detailsPanels = document.querySelectorAll('.achievement-details-panel');
+        const firstNode = document.getElementById('node-1');
+
+        // Observer for the trajectory path animation
+        const trajectoryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    trajectorySection.classList.add('is-visible');
+                    trajectoryObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        if (trajectorySection) {
+            trajectoryObserver.observe(trajectorySection);
+        }
+
+        // Handle hover interaction
+        nodes.forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                nodes.forEach(n => n.classList.remove('active', 'initial-focus'));
+                detailsPanels.forEach(p => p.classList.remove('active'));
+
+                node.classList.add('active');
+                const targetPanel = document.getElementById(node.dataset.target);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                }
+            });
+        });
+        
+        // Handle mouse leaving the entire container
+        const trajectoryContainer = document.querySelector('.trajectory-container');
+        if (trajectoryContainer) {
+            trajectoryContainer.addEventListener('mouseleave', () => {
+                nodes.forEach(n => n.classList.remove('active'));
+                detailsPanels.forEach(p => p.classList.remove('active'));
+
+                if(firstNode) {
+                    firstNode.classList.add('initial-focus');
+                    const firstPanel = document.getElementById(firstNode.dataset.target);
+                    if (firstPanel) {
+                        firstPanel.classList.add('active');
+                    }
+                }
             });
         }
     });
