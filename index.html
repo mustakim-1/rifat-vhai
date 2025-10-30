@@ -252,6 +252,157 @@
             opacity: 0.8;
         }
 
+
+        /* --- UNIQUE CONTENT SHOWCASE --- */
+#content {
+    padding-top: 120px;
+}
+.content-grid-unique {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    /* Define the grid structure */
+    grid-template-areas:
+        "featured featured item2"
+        "featured featured item3";
+}
+
+.content-card-unique {
+    background-color: var(--dark-section-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+}
+.content-card-unique:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color-light);
+}
+
+/* Assigning cards to grid areas */
+.content-card-unique.featured-video { grid-area: featured; }
+.content-grid-unique .content-card-unique:nth-child(2) { grid-area: item2; }
+.content-grid-unique .content-card-unique:nth-child(3) { grid-area: item3; }
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-thumbnail {
+    position: relative;
+    padding-top: 66.66%; /* Aspect ratio 3:2 */
+    overflow: hidden;
+}
+.card-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.content-card-unique:hover .card-thumbnail img {
+    transform: scale(1.05);
+}
+
+/* Overlay and Play Icon */
+.card-thumbnail::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    opacity: 0.8;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+.content-card-unique:hover .card-thumbnail::before {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(10,10,15,0.2) 60%);
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(212, 255, 0, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(212, 255, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.play-icon svg {
+    width: 28px;
+    height: 28px;
+    color: var(--accent-color-vibrant);
+    filter: drop-shadow(0 0 10px var(--accent-color-vibrant));
+    transition: transform 0.3s ease;
+}
+.content-card-unique:hover .play-icon {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: rgba(212, 255, 0, 0.3);
+    border-color: var(--accent-color-vibrant);
+}
+
+.card-body {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.card-body h3 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+.featured-video .card-body h3 {
+    font-size: 1.8rem;
+}
+.card-body p {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for the unique grid */
+@media (max-width: 900px) {
+    .content-grid-unique {
+         grid-template-areas:
+            "featured featured"
+            "item2 item3";
+    }
+}
+@media (max-width: 768px) {
+    .content-grid-unique {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "featured"
+            "item2"
+            "item3";
+    }
+    .featured-video .card-body h3 {
+        font-size: 1.5rem;
+    }
+}
+
+        
+
         /* --- Panel Positioning --- */
         #details-1 { top: 15%; left: 3%; }
         #details-2 { bottom: 35%; left: 38%; }
@@ -469,14 +620,18 @@
     <nav>
         <div class="nav-container container">
             <a href="#" class="nav-logo">[Your Name]</a>
-            <ul class="nav-links" id="nav-menu">
-                <li><a href="#about" class="magnetic-link">About</a></li>
-                <li><a href="#skills" class="magnetic-link">Skills</a></li>
-                <li><a href="#experience" class="magnetic-link">Experience</a></li>
-                <li><a href="#projects" class="magnetic-link">Projects</a></li>
-                <li><a href="#achievements" class="magnetic-link">Achievements</a></li>
-                <li><a href="#contact" class="magnetic-link">Contact</a></li>
-            </ul>
+<!-- Find this in your <nav> section -->
+<!-- Find this in your <nav> section -->
+<ul class="nav-links" id="nav-menu">
+    <li><a href="#about" class="magnetic-link">About</a></li>
+    <li><a href="#skills" class="magnetic-link">Skills</a></li>
+    <li><a href="#experience" class="magnetic-link">Experience</a></li>
+    <li><a href="#projects" class="magnetic-link">Projects</a></li>
+    <!-- ADD THIS NEW LINE -->
+    <li><a href="#content" class="magnetic-link">Content</a></li>
+    <li><a href="#achievements" class="magnetic-link">Achievements</a></li>
+    <li><a href="#contact" class="magnetic-link">Contact</a></li>
+</ul>
             <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -525,6 +680,65 @@
         
         <!-- PROJECTS SECTION -->
         <section id="projects" class="container"><h2 data-animation="fade-in">Projects & Initiatives</h2><div class="project-showcase-container" data-animation="fade-in"><div class="project-list"><div class="project-item active" data-image="sim"><h3>Interactive Physics Simulation</h3><p>A web-based simulation to explain projectile motion. Allows students to visually grasp concepts by manipulating variables.</p><div class="project-tools"><span>JavaScript</span><span>HTML5 Canvas</span><span>p5.js</span></div></div><div class="project-item" data-image="lesson"><h3>Lesson Plan Series</h3><p>A 5-day lesson plan on Electromagnetism for 12th-grade students, integrating hands-on activities and PhET simulations.</p><div class="project-tools"><span>Google Docs</span><span>Canva</span><span>PhET</span></div></div></div><div class="project-image-previews"><img src="https://via.placeholder.com/800x600.png?text=Interactive+Simulation" alt="Projectile Motion Simulation" class="project-preview-img active" data-image="sim"><img src="https://via.placeholder.com/800x600.png?text=Lesson+Plan+Series" alt="Electromagnetism lesson plan" class="project-preview-img" data-image="lesson"></div></div></section>
+
+        <!-- START: NEW UNIQUE CONTENT SHOWCASE SECTION -->
+<section id="content">
+    <div class="container">
+        <h2 data-animation="fade-in">From the Lab</h2>
+        <p class="section-subtitle" style="text-align: center; max-width: 60ch; margin: -40px auto 60px auto; opacity: 0.8;" data-animation="fade-in">
+            A handpicked collection of my favorite video lessons and explainers from my YouTube channel, designed to make physics intuitive.
+        </p>
+
+        <div class="content-grid-unique" data-animation="fade-in" data-stagger-parent>
+            <!-- Featured Video (takes up more space) -->
+            <div class="content-card-unique featured-video" data-stagger-child style="--stagger-index: 1;">
+                <a href="[YOUR-YOUTUBE-VIDEO-LINK]" target="_blank" class="card-link">
+                    <div class="card-thumbnail">
+                        <img src="https://via.placeholder.com/1200x800.png?text=Featured+Video:+Relativity" alt="Thumbnail for featured video on relativity">
+                        <div class="play-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 5.613L16.216 12L7.5 18.387V5.613ZM6 3.366C6 2.126 7.264 1.308 8.32 1.93L18.82 8.564C19.824 9.15 19.824 10.58 18.82 11.166L8.32 17.799C7.264 18.421 6 17.603 6 16.363V3.366Z"/></svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Special Relativity, Made Simple</h3>
+                        <p>My most popular video. A deep dive into time dilation and length contraction using intuitive animations.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Standard Video 1 -->
+            <div class="content-card-unique" data-stagger-child style="--stagger-index: 2;">
+                <a href="[YOUR-YOUTUBE-VIDEO-LINK]" target="_blank" class="card-link">
+                    <div class="card-thumbnail">
+                         <img src="https://via.placeholder.com/800x600.png?text=What+is+Dark+Matter?" alt="Thumbnail for a video about dark matter">
+                         <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 5.613L16.216 12L7.5 18.387V5.613ZM6 3.366C6 2.126 7.264 1.308 8.32 1.93L18.82 8.564C19.824 9.15 19.824 10.58 18.82 11.166L8.32 17.799C7.264 18.421 6 17.603 6 16.363V3.366Z"/></svg></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>What is Dark Matter?</h3>
+                        <p>Exploring the cosmic mystery holding our galaxies together.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Standard Video 2 -->
+            <div class="content-card-unique" data-stagger-child style="--stagger-index: 3;">
+                <a href="[YOUR-YOUTUBE-VIDEO-LINK]" target="_blank" class="card-link">
+                    <div class="card-thumbnail">
+                        <img src="https://via.placeholder.com/800x600.png?text=The+Double-Slit+Experiment" alt="Thumbnail for a video about the double-slit experiment">
+                        <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 5.613L16.216 12L7.5 18.387V5.613ZM6 3.366C6 2.126 7.264 1.308 8.32 1.93L18.82 8.564C19.824 9.15 19.824 10.58 18.82 11.166L8.32 17.799C7.264 18.421 6 17.603 6 16.363V3.366Z"/></svg></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>The Double-Slit Experiment</h3>
+                        <p>Unpacking the weirdness of quantum mechanics in 5 minutes.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Add more cards as needed -->
+        </div>
+    </div>
+</section>
+<!-- END: NEW UNIQUE CONTENT SHOWCASE SECTION -->
         
         <!-- COSMIC TRAJECTORY ACHIEVEMENTS SECTION -->
         <section id="achievements">
@@ -578,21 +792,6 @@
        
     </main>
 
-  <!-- START: REPLACEMENT CTA & FOOTER -->
-        <section id="contact" class="container">
-            <div class="cta-ripple-container" data-animation="fade-in">
-                <div class="ripple-background">
-                    <span class="ripple r1"></span>
-                    <span class="ripple r2"></span>
-                    <span class="ripple r3"></span>
-                </div>
-                <div class="cta-ripple-content">
-                    <h2>Create a Ripple</h2>
-                    <p>Have a question or a project in mind? Send a signal across the void. I'm always excited to connect with fellow enthusiasts and potential collaborators.</p>
-                    <a href="mailto:[your-email@example.com]" class="cta-button">Send Signal</a>
-                </div>
-            </div>
-        </section>
 
         <footer>
             <div class="footer-container container">
@@ -788,6 +987,8 @@
             });
         }
     });
+
+    
     </script>
 </body>
 </html>
