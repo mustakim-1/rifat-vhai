@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Book - [Your Name]</title>
+    <style>
+      /* --- GOOGLE FONTS --- */
+      @import url("https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&display=swap");
+
+      /* --- CSS VARIABLES (THEME) --- */
+      :root {
+        --bg-color: #0a0a0f;
+        --dark-section-bg: #101218;
+        --text-color: #e4e4e7;
+        --text-dark: #1a1a1a;
+        --accent-color-light: #a891e2; /* Light Purple */
+        --accent-color-vibrant: #d4ff00; /* Lime Green */
+        --border-color: #3a3a40;
+
+        --font-heading: "Anton", sans-serif;
+        --font-body: "Inter", sans-serif;
+      }
+
+      /* --- GENERAL STYLES --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: var(--font-body);
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      /* --- BLUEPRINT GRID BACKGROUND --- */
+      .blueprint-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(168, 145, 226, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(168, 145, 226, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: -2;
+        animation: pan-grid 60s linear infinite;
+      }
+      @keyframes pan-grid {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 500px 500px;
+        }
+      }
+      .vignette {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          transparent 50%,
+          var(--bg-color) 100%
+        );
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      section {
+        padding: 120px 0;
+      }
+      h1, h2, h3 {
+        font-family: var(--font-heading);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-color);
+        font-weight: 400;
+      }
+      h1 {
+        font-size: clamp(3.5rem, 10vw, 7rem);
+        line-height: 1;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        margin-bottom: 50px;
+      }
+      a {
+        color: var(--accent-color-light);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        color: var(--accent-color-vibrant);
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(10, 10, 15, 0.5);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        z-index: 1000;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+      }
+      .nav-logo {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        color: #fff;
+      }
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 10px;
+      }
+      .nav-links a {
+        font-weight: 500;
+        padding: 10px 15px;
+        color: var(--text-color);
+      }
+
+      /* --- BOOK SECTION --- */
+      .book-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 50px;
+      }
+      .book-cover {
+        width: 300px;
+        height: 450px;
+        background-color: #2a2a30;
+        border: 2px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        box-shadow: 0 0 30px rgba(168, 145, 226, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      .book-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .book-details {
+        max-width: 700px;
+      }
+      .book-description {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+      }
+      .cta-button {
+        display: inline-block;
+        padding: 15px 40px;
+        background-color: var(--accent-color-vibrant);
+        color: var(--text-dark);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 50px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .cta-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(212, 255, 0, 0.3);
+        color: var(--text-dark);
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        padding: 80px 0 40px 0;
+        background-color: var(--bg-color);
+        border-top: 1px solid var(--border-color);
+        margin-top: 50px;
+        text-align: center;
+      }
+      .footer-copyright {
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blueprint-grid"></div>
+    <div class="vignette"></div>
+
+    <nav>
+      <div class="nav-container container">
+        <a href="index.html" class="nav-logo">Md Abdullah Al Rifath</a>
+        <ul class="nav-links">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="container">
+      <section class="book-container">
+        <h1>My Published Book</h1>
+        <div class="book-cover">
+          <!-- Placeholder for book cover -->
+          <img src="https://via.placeholder.com/300x450.png?text=Book+Cover" alt="Book Cover">
+        </div>
+        <div class="book-details">
+          <h2>Physics of the Cosmos</h2>
+          <p class="book-description">
+            This book takes you on a journey through the fundamental laws of the universe. 
+            From the tiniest particles to the vastness of galaxies, explore the beauty of physics 
+            in a way that is accessible and inspiring.
+          </p>
+          <a href="#" class="cta-button">Get Your Copy</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-copyright">
+          <p>&copy; 2024 Md Abdullah Al Rifath. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
